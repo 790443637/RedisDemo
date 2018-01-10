@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ld.mapper.UserMapper">
+	<resultMap type="User" id="user_base">
+		<id column="id" property="id" />
+		<result column="name" property="name"/>
+		<result column="email" property="email"/>
+		<result column="age" property="age"/>
+		<result column="bornDate" property="bornDate"/>
+	</resultMap>
+	
+	<insert id="add" keyColumn="id" keyProperty="id" useGeneratedKeys="true">
+		insert into user(name,email,age,bornDate) value(#{name},#{email},#{age},#{bornDate})
+	</insert>
+	
+	<select id="get" parameterType="long" resultMap="user_base">
+		select id,name,email,age,bornDate from user where id=#{sss}
+	</select>
+	
+  	<update id="update" parameterType="User">
+  		update user set name=#{name},email=#{email},age=#{age},bornDate=#{bornDate}  where id=#{id}
+  	</update>
+
+  	<delete id="delete" parameterType="long">
+  		delete from user where id=#{delId}
+  	</delete>
+  	
+  	<select id="list" resultMap="user_base">
+  		select id,name,email,age,bornDate from user
+  	</select>
+
+	<select id="login" parameterType="string" resultType="User">
+		select id,name,email,age,bornDate FROM user WHERE name=#{name}
+	</select>
+</mapper>
